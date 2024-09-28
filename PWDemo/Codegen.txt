@@ -1,0 +1,8 @@
+To utlize the codegen feature, we have to use it through the playwright cli.
+we can access the CLI through - path : PWDemo/bin/Debug/net8.0/playwright.ps1
+
+
+the command used to begin code gen is, 
+    ./playwright.ps1 codegen "page URL"
+
+"playwright defaults to chromium browser."

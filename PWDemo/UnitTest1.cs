@@ -23,12 +23,18 @@ public class Tests
         var page = await browser.NewPageAsync();
 
         // navigating to website
-        await page.GotoAsync("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
+        await page.GotoAsync("http://eaapp.somee.com");
         await page.ClickAsync("text=Login");
         await page.ScreenshotAsync(new PageScreenshotOptions{
             Path = "OrangeHRM.png" 
         });
-
-
+        await page.FillAsync("#UserName", "admin");
+        await page.FillAsync("#Password", "password");
+        await page.ClickAsync("text=Log in");
+        var isExist = await page.Locator("text='Employee Details'").IsVisibleAsync();
+        Assert.That(isExist, Is.True);
+        await page.ScreenshotAsync(new PageScreenshotOptions{
+            Path = "OrangeHRM.png" 
+        });
     }
 }
