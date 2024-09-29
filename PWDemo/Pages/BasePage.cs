@@ -52,4 +52,9 @@ public abstract class BasePage
             return false; // Return false if an error occurs (element not found, etc.)
         }
     }
+    public async Task<string> getElementTextasync(string selector)
+    {
+            var textValue = await _page.Locator(selector).TextContentAsync();
+            return textValue ?? String.Empty;            
+    }
 }

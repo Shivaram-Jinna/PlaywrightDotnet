@@ -12,5 +12,14 @@ public class HomePage : BasePage
     {
         await GoToAsync("http://www.eaapp.somee.com");
     }
+    public async Task clickonLogin()
+    {
+        await ClickElementAsync("text=Login");
+    }
+    public async Task clickonRegister()
+    {
+        await ClickElementAsync("text=Register");
+    }
+
     
 }
