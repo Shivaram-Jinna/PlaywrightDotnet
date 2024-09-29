@@ -7,10 +7,9 @@ public class RegisterPage : BasePage
     {
 
     }
-    public async Task<string> GetHeaderAsync()
-    {
-        return await _page.InnerTextAsync("h2");
-    }
+    
+    
+    
     public async Task RegisterUser(string username, string password, string confirmPassword, string email)
     {
         await TypeTextAsync("#UserName", username);

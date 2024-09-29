@@ -19,6 +19,6 @@ public static class TestUtils
     // Random email generator
     public static string GenerateRandomEmail()
     {
-        return $"user{GenerateRandomUsername()}@example.com";
+        return $"{GenerateRandomUsername()}@example.com";
     }
 }

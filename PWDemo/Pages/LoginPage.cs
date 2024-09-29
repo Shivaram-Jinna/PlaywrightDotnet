@@ -8,12 +8,14 @@ public class LoginPage : BasePage
 
     }
     // Navigate to home page
-    public async Task UserLogin(string username, string password)
+    public async Task EnterCredentials(string username, string password)
     {
         await TypeTextAsync("text = username", username);
         await TypeTextAsync("text = password", password);
+    }
+    public async Task ClickLoginButton()
+    {
         await ClickElementAsync("text = Log in");
-
     }
     
 }

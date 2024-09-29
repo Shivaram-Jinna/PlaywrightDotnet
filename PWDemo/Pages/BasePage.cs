@@ -57,4 +57,16 @@ public abstract class BasePage
             var textValue = await _page.Locator(selector).TextContentAsync();
             return textValue ?? String.Empty;            
     }
+    public async Task takeScreenshot()
+    {
+        await _page.ScreenshotAsync(new PageScreenshotOptions
+        {
+            Path = "/Users/shivaramjinna/Desktop/PlaywrightDotnet/PWDemo/Test_ScreenShots/screenshot.png" // Specify the file path
+        });
+    }
+    public async Task<string> GetHeaderAsync()
+    {
+        return await _page.InnerTextAsync("h2");
+    }
+    
 }
