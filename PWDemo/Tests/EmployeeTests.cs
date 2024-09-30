@@ -1,13 +1,6 @@
 namespace PWDemo;
-
-using System.Runtime.CompilerServices;
-using Microsoft.Playwright;
-
 public class EmployeeTest : TestFixture
 {
-    public EmployeeTest(string browserType) : base(browserType)
-    {
-    }
 
     [Test]
     public async Task addEmployee_TC11_12_13_14()

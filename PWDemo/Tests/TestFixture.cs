@@ -1,17 +1,12 @@
-using NUnit.Framework;
 using Microsoft.Playwright;
-using System.Threading.Tasks;
 using PWDemo.Pages;
-
-[TestFixture("chromium")]
-[TestFixture("firefox")]
-[TestFixture("webkit")]
 public class TestFixture
 {
-    private readonly string _browserType;
     protected IPlaywright _playwright;
     protected IBrowser _browser;
     protected IPage _page;
+    private TestConfig _config;
+
     //All the pagename variables
     protected HomePage _homePage;
     protected LoginPage _loginPage;
@@ -22,29 +17,22 @@ public class TestFixture
     protected EditEmployeePage _editEmployeePage;
     protected DeleteEmployeePage _deleteEmployeePage;
 
-
-    public TestFixture(string browserType)
-    {
-        _browserType = browserType;
-    }
     [SetUp]
     public async Task Setup()
     {
-        _playwright = await Playwright.CreateAsync();
-        //Default Run to Chromium Browsers.
-        //_browser = await _playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions { Headless = false });
-        
-        // Declaring Environmen variables, to select browser while running a test case.
-        // _browser = await BrowserFactory.GetBrowserAsync(_playwright);
 
-        //Option : TestFixture - to Use Multple Browsers.
-        _browser = _browserType switch
-        {
-            //Defaulting it to chromium for now.
-            "firefox" => await _playwright.Firefox.LaunchAsync(new BrowserTypeLaunchOptions { Headless = false }),
-             "webkit" => await _playwright.Webkit.LaunchAsync(new BrowserTypeLaunchOptions { Headless = false }),
-            _ => await _playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions { Headless = false }),
-        };
+        //Load Test Environment Configurations.
+         _config = ConfigLoader.LoadConfiguration();
+
+        _playwright = await Playwright.CreateAsync();
+        
+        _browser = _config.BrowserType switch
+            {
+                "firefox" => await _playwright.Firefox.LaunchAsync(new BrowserTypeLaunchOptions { Headless = _config.Headless }),
+                "webkit" => await _playwright.Webkit.LaunchAsync(new BrowserTypeLaunchOptions { Headless = _config.Headless }),
+                _ => await _playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions { Headless = _config.Headless }),
+            };
+        
         _page = await _browser.NewPageAsync();
 
         // Initialize page objects

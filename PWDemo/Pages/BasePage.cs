@@ -1,5 +1,4 @@
 using Microsoft.Playwright;
-using System.Threading.Tasks;
 
 public abstract class BasePage
 {

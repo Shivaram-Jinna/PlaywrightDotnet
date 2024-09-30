@@ -1,9 +1,6 @@
 namespace PWDemo;
 public class SearchTest : TestFixture
 {
-    public SearchTest(string browserType) : base(browserType)
-    {
-    }
 
     [Test]
     public async Task SearchEmployee()

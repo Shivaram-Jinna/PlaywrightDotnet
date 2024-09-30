@@ -1,15 +1,7 @@
-using System.Runtime.CompilerServices;
-using Microsoft.Playwright;
-using PWDemo.Pages;
-
 namespace PWDemo;
 
 public class UserLoginTest : TestFixture
 {
-    public UserLoginTest(string browserType) : base(browserType)
-    {
-    }
-
     [Test]
     public async Task ValidLogin_TC1()
     {

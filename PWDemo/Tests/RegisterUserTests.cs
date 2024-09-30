@@ -1,9 +1,6 @@
 namespace PWDemo;
 public class RegisterUserTests : TestFixture
 {
-    public RegisterUserTests(string browserType) : base(browserType)
-    {
-    }
 
     [Test]
     public async Task registerUserTests_TC5()
