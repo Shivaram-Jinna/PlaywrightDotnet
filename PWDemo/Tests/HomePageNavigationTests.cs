@@ -1,6 +1,10 @@
 namespace PWDemo;
 public class HomePageNavigationTest : TestFixture
 {
+    public HomePageNavigationTest(string browserType) : base(browserType)
+    {
+    }
+
     [Test]
     public async Task navBarItems_TC9()
     {
