@@ -14,6 +14,9 @@ public class TestFixture
     protected RegisterPage _registerPage;
     protected AboutPage _aboutPage;
     protected EmployeePage _employeePage;
+    protected CreateEmployeePage _createEmployeePage;
+    protected EditEmployeePage _editEmployeePage;
+    protected DeleteEmployeePage _deleteEmployeePage;
 
 
 
@@ -30,6 +33,9 @@ public class TestFixture
         _registerPage = new RegisterPage(_page);
         _aboutPage = new AboutPage(_page);
         _employeePage = new EmployeePage(_page);
+        _createEmployeePage = new CreateEmployeePage(_page);
+        _editEmployeePage = new EditEmployeePage(_page);
+        _deleteEmployeePage = new DeleteEmployeePage(_page);
     }
 
     [TearDown]

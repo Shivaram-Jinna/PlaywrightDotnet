@@ -40,7 +40,7 @@ public class RegisterUserTests : TestFixture
         string emailAddress = "";
         await _registerPage.RegisterUser(uName, password, cPassword,emailAddress);
         //Step - 5: Take Screenshot
-        await _registerPage.takeScreenshot();
+        //await _registerPage.takeScreenshot();
         //Step - 6: Click on Register Button
         await _registerPage.clickRegister();
         //Step - 7: Verify if the application displays, error message

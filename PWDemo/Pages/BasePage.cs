@@ -27,6 +27,11 @@ public abstract class BasePage
     {
         await _page.FillAsync(selector, text);
     }
+    //Common method to selection option in a drop down menu
+    public async Task dropdownSelectAsync(string selector, string option)
+    {
+         await _page.SelectOptionAsync(selector, new[] { option });
+    }
 
     // Common method for waiting for an element to be visible
     public async Task WaitForElementAsync(string selector)
@@ -49,7 +54,7 @@ public abstract class BasePage
         }
         catch
         {
-            return false; // Return false if an error occurs (element not found, etc.)
+            return false;
         }
     }
     public async Task<string> getElementTextasync(string selector)
@@ -102,7 +107,5 @@ public abstract class BasePage
     public async Task Click_NavEmployeeList()
     {
         await ClickElementAsync("text=Employee List");
-    }
-
-    
+    } 
 }
