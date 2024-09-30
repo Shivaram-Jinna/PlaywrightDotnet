@@ -11,15 +11,15 @@ public class HomePageNavigationTest : TestFixture
         string pageTitle = await _homePage.GetTitleAsync();
         Assert.That(pageTitle, Is.EquivalentTo("Home - Execute Automation Employee App"));
         await _homePage.ClickElementAsync("text=About");
-        pageTitle = await _homePage.GetTitleAsync();
+        pageTitle = await _aboutPage.GetTitleAsync();
         Assert.That(pageTitle, Is.EquivalentTo("About - Execute Automation Employee App"));
         await _homePage.BrowserGoBack();
         await _homePage.ClickElementAsync("text=Register");
-        pageTitle = await _homePage.GetTitleAsync();
+        pageTitle = await _registerPage.GetTitleAsync();
         Assert.That(pageTitle, Is.EquivalentTo("Register - Execute Automation Employee App"));
         await _homePage.BrowserGoBack();
         await _homePage.ClickElementAsync("text=Login");
-        pageTitle = await _homePage.GetTitleAsync();
+        pageTitle = await _loginPage.GetTitleAsync();
         Assert.That(pageTitle, Is.EquivalentTo("Login - Execute Automation Employee App"));
         await _homePage.BrowserGoBack();
     }
@@ -28,16 +28,16 @@ public class HomePageNavigationTest : TestFixture
     {
         await _homePage.GoToHomePage();
         var homepage_NavLinks = await _homePage.getNavItems();
-        await _homePage.clickonLogin();
+        await _homePage.Click_NavLogin();
         var loginPage_NavLinks = await _loginPage.getNavItems();
         Assert.That(loginPage_NavLinks, Is.EqualTo(homepage_NavLinks));
-        await _homePage.clickonAbout();
+        await _loginPage.Click_NavAbout();
         var aboutPage_NavLinks = await _aboutPage.getNavItems();
         Assert.That(aboutPage_NavLinks, Is.EqualTo(homepage_NavLinks));
-        await _homePage.clickonEmployeeList();
+        await _aboutPage.Click_NavEmployeeList();
         var employeePage_NavLinks = await _aboutPage.getNavItems();
         Assert.That(employeePage_NavLinks, Is.EqualTo(homepage_NavLinks));
-        await _homePage.clickonRegister();
+        await _employeePage.Click_NavRegister();
         var registerPage_NavLinks = await _aboutPage.getNavItems();
         Assert.That(registerPage_NavLinks, Is.EqualTo(homepage_NavLinks));
         

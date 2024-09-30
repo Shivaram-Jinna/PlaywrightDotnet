@@ -7,7 +7,7 @@ public class RegisterUserTests : TestFixture
         //step - 1: Navigate to homePage
         await _homePage.GoToHomePage();
         //step - 2: Navigate to RegisterPage
-        await _homePage.clickonRegister();
+        await _homePage.Click_NavRegister();
         //step - 3: Verify if naviagted to RegisterPage.
         var pageHeader = await _registerPage.GetHeaderAsync();
         Assert.That(pageHeader, Is.EqualTo("Register."));
@@ -29,7 +29,7 @@ public class RegisterUserTests : TestFixture
         //step - 1: Navigate to homePage
         await _homePage.GoToHomePage();
         //step - 2: Navigate to RegisterPage
-        await _homePage.clickonRegister();
+        await _homePage.Click_NavRegister();
         //step - 3: Verify if naviagted to RegisterPage.
         var pageHeader = await _registerPage.GetHeaderAsync();
         Assert.That(pageHeader, Is.EqualTo("Register."));
@@ -58,7 +58,7 @@ public class RegisterUserTests : TestFixture
         //step - 1: Navigate to homePage
         await _homePage.GoToHomePage();
         //step - 2: Navigate to RegisterPage
-        await _homePage.clickonRegister();
+        await _homePage.Click_NavRegister();
         //step - 3: Verify if naviagted to RegisterPage.
         var pageHeader = await _registerPage.GetHeaderAsync();
         Assert.That(pageHeader, Is.EqualTo("Register."));

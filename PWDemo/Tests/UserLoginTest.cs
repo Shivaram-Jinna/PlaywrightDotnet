@@ -12,7 +12,7 @@ public class UserLoginTest : TestFixture
         //Navigate to Home page
         await _homePage.GoToHomePage();
         //Step - 1: Navigate to Login Page
-        await _homePage.clickonLogin();
+        await _homePage.Click_NavLogin();
         // Verify, user is navigated to Login Page
         string pageHeader = await _loginPage.GetHeaderAsync();
         Assert.That(pageHeader, Is.EqualTo("Login."));
@@ -32,7 +32,7 @@ public class UserLoginTest : TestFixture
         //Navigate to Home page
         await _homePage.GoToHomePage();
         //Step - 1: Navigate to Login Page
-        await _homePage.clickonLogin();
+        await _homePage.Click_NavLogin();
         // Verify, user is navigated to Login Page
         string pageHeader = await _loginPage.GetHeaderAsync();
         Assert.That(pageHeader, Is.EqualTo("Login."));
@@ -52,7 +52,7 @@ public class UserLoginTest : TestFixture
         //Navigate to Home page
         await _homePage.GoToHomePage();
         //Step - 1: Navigate to Login Page
-        await _homePage.clickonLogin();
+        await _homePage.Click_NavLogin();
         // Verify, user is navigated to Login Page
         string pageHeader = await _loginPage.GetHeaderAsync();
         Assert.That(pageHeader, Is.EqualTo("Login."));
@@ -75,7 +75,7 @@ public class UserLoginTest : TestFixture
         //Navigate to Home page
         await _homePage.GoToHomePage();
         //Step - 1: Navigate to Login Page
-        await _homePage.clickonLogin();
+        await _homePage.Click_NavLogin();
         // Verify, user is navigated to Login Page
         string pageHeader = await _loginPage.GetHeaderAsync();
         Assert.That(pageHeader, Is.EqualTo("Login."));

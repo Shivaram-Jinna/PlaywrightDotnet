@@ -83,5 +83,26 @@ public abstract class BasePage
         }
          return navTextList;
     }
+    public async Task Click_NavHome()
+    {
+        await ClickElementAsync("text=Home");
+    }
+    public async Task Click_NavLogin()
+    {
+        await ClickElementAsync("text=Login");
+    }
+    public async Task Click_NavRegister()
+    {
+        await ClickElementAsync("text=Register");
+    }
+    public async Task Click_NavAbout()
+    {
+        await ClickElementAsync("text=About");
+    }
+    public async Task Click_NavEmployeeList()
+    {
+        await ClickElementAsync("text=Employee List");
+    }
+
     
 }
