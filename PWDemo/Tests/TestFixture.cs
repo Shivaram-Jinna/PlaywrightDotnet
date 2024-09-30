@@ -12,6 +12,9 @@ public class TestFixture
     protected HomePage _homePage;
     protected LoginPage _loginPage;
     protected RegisterPage _registerPage;
+    protected AboutPage _aboutPage;
+    protected EmployeePage _employeePage;
+
 
 
     [SetUp]
@@ -25,6 +28,8 @@ public class TestFixture
         _homePage = new HomePage(_page);
         _loginPage = new LoginPage(_page);
         _registerPage = new RegisterPage(_page);
+        _aboutPage = new AboutPage(_page);
+        _employeePage = new EmployeePage(_page);
     }
 
     [TearDown]

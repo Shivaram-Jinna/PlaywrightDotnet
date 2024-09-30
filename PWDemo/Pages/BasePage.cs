@@ -68,5 +68,20 @@ public abstract class BasePage
     {
         return await _page.InnerTextAsync("h2");
     }
+    public async Task BrowserGoBack()
+    {
+        await _page.GoBackAsync();
+    }
+    public async Task<List<string>> getNavItems()
+    { 
+        // Left nav bar
+        var navLinks = await _page.Locator("ul.nav.navbar-nav li a").AllAsync(); 
+        List<string> navTextList = new List<string>();
+        foreach (var link in navLinks)
+        {
+            navTextList.Add((await link.TextContentAsync()).Trim());
+        }
+         return navTextList;
+    }
     
 }

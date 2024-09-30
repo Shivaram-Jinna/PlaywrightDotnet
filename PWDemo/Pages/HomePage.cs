@@ -20,6 +20,14 @@ public class HomePage : BasePage
     {
         await ClickElementAsync("text=Register");
     }
+    public async Task clickonAbout()
+    {
+        await ClickElementAsync("text=About");
+    }
+    public async Task clickonEmployeeList()
+    {
+        await ClickElementAsync("text=Employee List");
+    }
 
     
 }
