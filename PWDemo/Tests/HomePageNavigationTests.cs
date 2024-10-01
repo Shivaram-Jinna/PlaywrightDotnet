@@ -34,9 +34,4 @@ public class HomePageNavigationTest : TestFixture
         var registerPage_NavLinks = await _aboutPage.getNavItems();
         Assert.That(registerPage_NavLinks, Is.EqualTo(homepage_NavLinks));  
     }
-    [Test]
-    public async Task AmazonTrackinginfo()
-    {
-        await _homePage.GoToAsync("")
-    }
 }

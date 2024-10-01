@@ -1,5 +1,9 @@
 using Microsoft.Playwright;
 using PWDemo.Pages;
+
+//Enabling parallel runs at assembly level
+[assembly: Parallelizable(ParallelScope.Fixtures)]
+[assembly: LevelOfParallelism(4)]
 public class TestFixture
 {
     protected IPlaywright _playwright;
