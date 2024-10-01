@@ -2,26 +2,19 @@ namespace PWDemo;
 public class HomePageNavigationTest : TestFixture
 {
     [Test]
+    [Category("SmokeTests")]
     public async Task navBarItems_TC9()
     {
         //step - 1: Navigate to HomePage
         await  _homePage.GoToHomePage();
         //step -2: Test Each Nav bar items
-        await _homePage.ClickElementAsync("text=Home");
-        string pageTitle = await _homePage.GetTitleAsync();
-        Assert.That(pageTitle, Is.EquivalentTo("Home - Execute Automation Employee App"));
-        await _homePage.ClickElementAsync("text=About");
-        pageTitle = await _aboutPage.GetTitleAsync();
-        Assert.That(pageTitle, Is.EquivalentTo("About - Execute Automation Employee App"));
-        await _homePage.BrowserGoBack();
-        await _homePage.ClickElementAsync("text=Register");
-        pageTitle = await _registerPage.GetTitleAsync();
-        Assert.That(pageTitle, Is.EquivalentTo("Register - Execute Automation Employee App"));
-        await _homePage.BrowserGoBack();
-        await _homePage.ClickElementAsync("text=Login");
-        pageTitle = await _loginPage.GetTitleAsync();
-        Assert.That(pageTitle, Is.EquivalentTo("Login - Execute Automation Employee App"));
-        await _homePage.BrowserGoBack();
+        await _homePage.Click_NavHome();
+        await _homePage.Click_NavAbout();
+        
+        await _homePage.Click_NavEmployeeList();
+
+        await _homePage.Click_NavRegister();
+        await _homePage.Click_NavLogin();
     }
     [Test]
     public async Task VerifyNavLinks_TC10()
@@ -39,7 +32,11 @@ public class HomePageNavigationTest : TestFixture
         Assert.That(employeePage_NavLinks, Is.EqualTo(homepage_NavLinks));
         await _employeePage.Click_NavRegister();
         var registerPage_NavLinks = await _aboutPage.getNavItems();
-        Assert.That(registerPage_NavLinks, Is.EqualTo(homepage_NavLinks));
-        
+        Assert.That(registerPage_NavLinks, Is.EqualTo(homepage_NavLinks));  
+    }
+    [Test]
+    public async Task AmazonTrackinginfo()
+    {
+        await _homePage.GoToAsync("")
     }
 }

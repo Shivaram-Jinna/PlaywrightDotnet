@@ -1,0 +1,6 @@
+Playwright Netwrok Listners
+
+    runadnwaitforresponseasync(action, condition for approval of the acvtion)
+    runadnwaitforrequestasync(action, condition for approval of the acvtion)
+    waitforrequestasync()
+    waitforresponseasync()

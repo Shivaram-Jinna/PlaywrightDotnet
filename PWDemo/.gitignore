@@ -1,3 +1,5 @@
-"/Dump"
-"/obj"
-"/bin"
+/Dump
+/obj
+/bin
+
+RunningTest.txt

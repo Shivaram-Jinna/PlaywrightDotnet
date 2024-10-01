@@ -1,3 +1,4 @@
+using System.Security.Cryptography.X509Certificates;
 using Microsoft.Playwright;
 
 public abstract class BasePage
@@ -87,24 +88,31 @@ public abstract class BasePage
         }
          return navTextList;
     }
+    //Implementing Network Listneres - Where Url Is verified, if user is navigate to correct page.
     public async Task Click_NavHome()
     {
         await ClickElementAsync("text=Home");
     }
+    public async Task Click_NavAbout()
+    {
+        await ClickElementAsync("text=About");
+        await _page.WaitForURLAsync("**/About");
+    }
+    public async Task Click_NavEmployeeList()
+    {
+        //await _page.RunAndWaitForResponseAsync(async()=> await ClickElementAsync("text=Employee List"), x => x.Url.Contains("/Employee"));
+        await _page.RunAndWaitForRequestAsync(async()=> await ClickElementAsync("text=Employee List"), x => x.Url.Contains("/Employee"));
+    } 
     public async Task Click_NavLogin()
     {
         await ClickElementAsync("text=Login");
+        
+        await _page.WaitForURLAsync("**/Login");
     }
     public async Task Click_NavRegister()
     {
         await ClickElementAsync("text=Register");
+        await _page.WaitForURLAsync("**/Register");
     }
-    public async Task Click_NavAbout()
-    {
-        await ClickElementAsync("text=About");
-    }
-    public async Task Click_NavEmployeeList()
-    {
-        await ClickElementAsync("text=Employee List");
-    } 
+    
 }
