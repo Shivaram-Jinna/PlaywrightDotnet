@@ -1,23 +1,36 @@
+using Allure.NUnit;
+using Allure.NUnit.Attributes;
+
 namespace PWDemo;
+[AllureNUnit]
 public class HomePageNavigationTest : TestFixture
 {
     [Test]
-    [Category("SmokeTests")]
-    public async Task navBarItems_TC9()
+    [AllureStep]
+    [AllureDescription("Clicking Navigation bar links should navigate usr to appropiate pages.")]
+    [AllureOwner("SJinna")]
+    [AllureTag("Nunit", "SmokeTest","NavigationLinks")]
+    [AllureSeverity(Allure.Net.Commons.SeverityLevel.normal)]
+    [AllureFeature("Navigation Functionality")]
+    public async Task Verify_UserCanSwitch_ThroughNavigationLinks_TC8()
     {
         //step - 1: Navigate to HomePage
         await  _homePage.GoToHomePage();
         //step -2: Test Each Nav bar items
         await _homePage.Click_NavHome();
         await _homePage.Click_NavAbout();
-        
         await _homePage.Click_NavEmployeeList();
-
         await _homePage.Click_NavRegister();
         await _homePage.Click_NavLogin();
     }
     [Test]
-    public async Task VerifyNavLinks_TC10()
+    [AllureStep]
+    [AllureDescription("Navigation Links Should Be Consistent in all the pages.")]
+    [AllureOwner("SJinna")]
+    [AllureTag("Nunit", "SmokeTest","NavigationLinks")]
+    [AllureSeverity(Allure.Net.Commons.SeverityLevel.normal)]
+    [AllureFeature("Navigation Functionality")]
+    public async Task Verify_UserSwitchPages_NavigationLinks_Consitant_TC9()
     {
         await _homePage.GoToHomePage();
         var homepage_NavLinks = await _homePage.getNavItems();

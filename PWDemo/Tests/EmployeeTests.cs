@@ -1,48 +1,81 @@
+using Allure.NUnit;
+using Allure.NUnit.Attributes;
+
 namespace PWDemo;
+[AllureNUnit]
 public class EmployeeTest : TestFixture
 {
-
     [Test]
-    public async Task addEmployee_TC11_12_13_14()
+    [AllureStep]
+    [AllureDescription("Admin Should be able to add new employee and verify details are displayed properly.")]
+    [AllureOwner("SJinna")]
+    [AllureTag("Nunit", "SmokeTest","AddEmployee")]
+    [AllureSeverity(Allure.Net.Commons.SeverityLevel.normal)]
+    [AllureFeature("AddEmployee Functionality")]
+    public async Task Verify_CanAddEmployee_WithValidDetails_TC11()
+    //Merged TestCase : Verify_UserCan_ViewEmployeeDetails_TC14
     {
-        //Step - 1: Login navigate to home page
+        //Login navigate to home page
         await _homePage.GoToHomePage();
-        //Step - 1: Navigate to Login Page
         await _homePage.Click_NavLogin();
-        // Verify, user is navigated to Login Page
-        string pageHeader = await _loginPage.GetHeaderAsync();
-        Assert.That(pageHeader, Is.EqualTo("Login."));
-        //Step - 2 : Enter Username, password
         string uName = "admin";
         string pWord = "password";
-        await _loginPage.EnterCredentials(uName, pWord);
-        //step - 3 : Click on login button
-        await _loginPage.ClickLoginButton();
-        // Step - 4 : Click on employee List on nav bar
+        //Click Login, enter credentials and login.
+        await _loginPage.LoginAs(uName, pWord);
+        await _loginPage.clickLoginaAsync();
+        //Click on employee List on nav bar
         await _homePage.Click_NavEmployeeList();
-        // Step - 5 : Click on create new Button
-        await _homePage.ClickElementAsync("text=Create New");
-        // step - 6 : enter employee details and click on create.
+        //Click on create new Button
+        await _employeePage.clickCreateNewAsync();
+        //Enter employee details and click on create.
         string empName = TestUtils.GenerateRandomUsername();
         string empsalary = "90000";
         string empDWorked = "5";
         string empGrade = "1";
         string empEmail = TestUtils.GenerateRandomEmail();
         await _createEmployeePage.addEmployeeDetails(empName,empsalary,empDWorked,empGrade,empEmail);
-        //Step - 7: Click on Create
         await _createEmployeePage.clickCreateAsync();
-
-        //TC - 14 Verifying Employee details
-        //Step - 8 : enter empName in search box and click search.
+        //TC - 14 Verify_UserCan_ViewEmployeeDetails
+        //enter empName in search box and click search.
         await _employeePage.searchEmployee(empName);
-        // Step - 9 : Verify all the employee details
+        //Verify all the employee details
         await _employeePage.verifyEmployee(empName,empsalary,empDWorked, empGrade, empEmail);
-        
+    }
 
-        //TC - 12 Editing Employee Deatilas
-        // Step - 10 : Click on Edit Employee button
+    [Test]
+    [AllureStep]
+    [AllureDescription("Admin Should be able to Edit employee Details and verify Employee deatils should be updated.")]
+    [AllureOwner("SJinna")]
+    [AllureTag("Nunit", "SmokeTest","EditEmployee")]
+    [AllureSeverity(Allure.Net.Commons.SeverityLevel.normal)]
+    [AllureFeature("EditEmployee Functionality")]
+    public async Task Verify_UserCan_Edit_EmployeeDetails_TC12()
+    {
+        //Login navigate to home page
+        await _homePage.GoToHomePage();
+        //Admin Login
+        await _homePage.Click_NavLogin();
+        string uName = "admin";
+        string pWord = "password";
+        //Click Login, enter credentials and login.
+        await _loginPage.LoginAs(uName, pWord);
+        await _loginPage.clickLoginaAsync();
+        //Click on employee List on nav bar
+        await _homePage.Click_NavEmployeeList();
+        //Click on create new Button
+        await _employeePage.clickCreateNewAsync();
+        //Enter employee details and click on create.
+        string empName = TestUtils.GenerateRandomUsername();
+        string empsalary = "90000";
+        string empDWorked = "5";
+        string empGrade = "1";
+        string empEmail = TestUtils.GenerateRandomEmail();
+        await _createEmployeePage.addEmployeeDetails(empName,empsalary,empDWorked,empGrade,empEmail);
+        await _createEmployeePage.clickCreateAsync();
+        await _employeePage.searchEmployee(empName);
+        //Click on Edit Employee button
         await _employeePage.editEmployee();
-        //step - 11 : edit Employee details
+        //edit Employee details
         empName = "edited"+empName;
         empsalary = "100000";
         empDWorked = "6";
@@ -50,24 +83,43 @@ public class EmployeeTest : TestFixture
         empEmail = "edited"+empEmail;
         await _editEmployeePage.editEmployeeDetails(empName,empsalary,empDWorked,empGrade,empEmail);
         await _editEmployeePage.clickSaveAsync();
-        //Step - 12 : enter Edited empName in search box and click search.
+        //Enter Edited empName in search box and click search.
         await _employeePage.searchEmployee(empName);
-        // Step - 13 : Verify all the employee details
+        //Verify Edited Employee details
         await _employeePage.verifyEmployee(empName,empsalary,empDWorked, empGrade, empEmail);
-        
-
-
-        //TC-13 Deleting Employee
-        //Step - 14 : search employeee to delete 
+    }
+    [Test]
+    [AllureStep]
+    [AllureDescription("Admin Should e able to delete an employee.")]
+    [AllureOwner("SJinna")]
+    [AllureTag("Nunit", "SmokeTest","DeleteEmployee")]
+    [AllureSeverity(Allure.Net.Commons.SeverityLevel.normal)]
+    [AllureFeature("DeleteEmployee Functionality")]
+    public async Task Verify_UserCan_DeleteEmployee_TC13()
+    {
+        //Login navigate to home page
+        await _homePage.GoToHomePage();
+        //Admin Login
+        await _homePage.Click_NavLogin();
+        string uName = "admin";
+        string pWord = "password";
+        //Click Login, enter credentials and login.
+        await _loginPage.LoginAs(uName, pWord);
+        await _loginPage.clickLoginaAsync();
+        //Click on employee List on nav bar
+        await _homePage.Click_NavEmployeeList();
+        await _employeePage.clickCreateNewAsync();
+        string empName = TestUtils.GenerateRandomUsername();
+        string empsalary = "90000";
+        string empDWorked = "5";
+        string empGrade = "1";
+        string empEmail = TestUtils.GenerateRandomEmail();
+        await _createEmployeePage.addEmployeeDetails(empName,empsalary,empDWorked,empGrade,empEmail);
+        await _createEmployeePage.clickCreateAsync();
         await _employeePage.searchEmployee(empName);
-        //Step - 15 : click on delete
-        await _employeePage.ClickElementAsync("text=Delete");
-        //Step - 16 : click on delete on Employee/delete page
+        await _employeePage.clickDeleteAsync();
         await _deleteEmployeePage.clickDeleteAsync();
-        //Step - 17: Searc hand Verify;
         await _employeePage.searchEmployee(empName);
-
-
         // Was Unable to verify the test step in framework.
         // Step - 18 : Verify if Employee is deleted.
         

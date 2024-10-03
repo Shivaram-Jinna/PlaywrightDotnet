@@ -1,5 +1,28 @@
-/Dump
-/obj
-/bin
+# Ignore build outputs
+bin/
+obj/
 
-RunningTest.txt
+# Ignore user-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Ignore compiled assemblies
+*.dll
+*.exe
+
+# Ignore NuGet packages (if not using package restore)
+packages/
+
+# Ignore test results
+TestResults/
+*.trx
+
+# Ignore environment-specific files
+.vscode/
+.idea/
+
+# Ignore other files
+*.log
+/Dump

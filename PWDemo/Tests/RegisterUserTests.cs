@@ -1,9 +1,18 @@
+using Allure.NUnit;
+using Allure.NUnit.Attributes;
+
 namespace PWDemo;
+[AllureNUnit]
 public class RegisterUserTests : TestFixture
 {
-
     [Test]
-    public async Task registerUserTests_TC5()
+    [AllureStep]
+    [AllureDescription("New user registration with valid details, Should login to user account and Navigate to HomePage.")]
+    [AllureOwner("SJinna")]
+    [AllureTag("Nunit", "SmokeTest","UserRegisteration")]
+    [AllureSeverity(Allure.Net.Commons.SeverityLevel.normal)]
+    [AllureFeature("User Registration Functionality")]
+    public async Task RegisterUser_WithValidDetails_ShouldRedirectToDashboard_TC5()
     {
         //step - 1: Navigate to homePage
         await _homePage.GoToHomePage();
@@ -18,14 +27,20 @@ public class RegisterUserTests : TestFixture
         string cPassword = "Password@123";
         string emailAddress = TestUtils.GenerateRandomEmail();
         await _registerPage.RegisterUser(uName, password, cPassword,emailAddress);
-        //Step - 5: Click on Register Button
-        await _registerPage.clickRegister();
+        await _registerPage.clickRegisterAsync();
         //Step - 6: Verify if the user is Succesfully Registered
-        var userGreetings = await _homePage.getElementTextasync("a[title='Manage']");
-        Assert.That(userGreetings, Is.EqualTo("Hello "+uName+"!"));
+        var userAccount = await _homePage.validateAccountName(uName);
+        Assert.That(userAccount, Is.EqualTo(true));
+        
     }
     [Test]
-    public async Task Invalid_UserName_TC6()
+    [AllureStep]
+    [AllureDescription("New user registration with Missing details, Should Display field Error Messages")]
+    [AllureOwner("SJinna")]
+    [AllureTag("Nunit", "SmokeTest","UserRegisteration")]
+    [AllureSeverity(Allure.Net.Commons.SeverityLevel.normal)]
+    [AllureFeature("User Registration Functionality")]
+    public async Task RegisterUser_WithMisssingFields_DisplayErrorMessage_TC6()
     {
         //step - 1: Navigate to homePage
         await _homePage.GoToHomePage();
@@ -40,10 +55,7 @@ public class RegisterUserTests : TestFixture
         string cPassword = "";
         string emailAddress = "";
         await _registerPage.RegisterUser(uName, password, cPassword,emailAddress);
-        //Step - 5: Take Screenshot
-        //await _registerPage.takeScreenshot();
-        //Step - 6: Click on Register Button
-        await _registerPage.clickRegister();
+        await _registerPage.clickRegisterAsync();
         //Step - 7: Verify if the application displays, error message
         var UserName_Invalid = await _registerPage.IsElementVisibleAsync("text=The UserName field is required.");
         Assert.That(UserName_Invalid, "True");
@@ -54,23 +66,31 @@ public class RegisterUserTests : TestFixture
     }
 
     [Test]
-    public async Task registerExistingUserDetails_TC7()
+    [AllureStep]
+    [AllureDescription("New user registration with Existing User details, Should not Allow User Registration, and Display Erro Message.")]
+    [AllureOwner("SJinna")]
+    [AllureTag("Nunit", "SmokeTest","UserRegisteration")]
+    [AllureSeverity(Allure.Net.Commons.SeverityLevel.normal)]
+    [AllureFeature("User Registration Functionality")]
+    public async Task RegisterUser_WithExsitingDetails_ShouldDisplayErrorMessage_TC7()
     {
-        //step - 1: Navigate to homePage
         await _homePage.GoToHomePage();
-        //step - 2: Navigate to RegisterPage
         await _homePage.Click_NavRegister();
-        //step - 3: Verify if naviagted to RegisterPage.
         var pageHeader = await _registerPage.GetHeaderAsync();
         Assert.That(pageHeader, Is.EqualTo("Register."));
-        //step - 4: Enter with userdeatils
-        string uName = "admin69";
+        string uName = TestUtils.GenerateRandomUsername();
         string password = "Password@123";
         string cPassword = "Password@123";
-        string emailAddress = "admin69@eaapp.com";
+        string emailAddress = TestUtils.GenerateRandomEmail();
         await _registerPage.RegisterUser(uName, password, cPassword,emailAddress);
-        //Step - 5: Click on Register Button
-        await _registerPage.clickRegister();
+        await _registerPage.clickRegisterAsync();
+        var userAccount = await _homePage.validateAccountName(uName);
+        Assert.That(userAccount, Is.EqualTo(true));
+        //Logout of the account 
+        await _homePage.Click_NavLogOff();
+        await _homePage.Click_NavRegister();
+        await _registerPage.RegisterUser(uName, password, cPassword,emailAddress);
+        await _registerPage.clickRegisterAsync();
         //Step - 6: Verify if the error messages are diaplyed
         string UN_errorMessage = "text=Name "+uName+" is already taken.";
         var UserNameError = await _registerPage.IsElementVisibleAsync(UN_errorMessage);

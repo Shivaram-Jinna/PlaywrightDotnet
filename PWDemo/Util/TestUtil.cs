@@ -1,5 +1,5 @@
 using System.Text;
-
+namespace PWDemo;
 public static class TestUtils
 {
     // Random username generator

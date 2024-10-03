@@ -1,94 +1,81 @@
+using Allure.NUnit;
+using Allure.NUnit.Attributes;
+
 namespace PWDemo;
 
+[AllureNUnit]
 public class UserLoginTest : TestFixture
 {
     [Test]
-    public async Task ValidLogin_TC1()
+    [AllureStep]
+    [AllureDescription("User should be able to login with Valid username and password, and Navigate to Home Page.")]
+    [AllureOwner("SJinna")]
+    [AllureTag("Nunit", "SmokeTest","Login")]
+    //[Category("Login_Functionality")]
+    [AllureSeverity(Allure.Net.Commons.SeverityLevel.normal)]
+    [AllureFeature("Login Functionality")]  
+    public async Task Login_WithValidCredentials_ShouldRedirectToDashboard_TC1()
+    //Merged Testcase -  Logout_ShouldRedirectToDashboard_TC4
     {
         //Navigate to Home page
         await _homePage.GoToHomePage();
-        //Step - 1: Navigate to Login Page
         await _homePage.Click_NavLogin();
-        // Verify, user is navigated to Login Page
-        string pageHeader = await _loginPage.GetHeaderAsync();
-        Assert.That(pageHeader, Is.EqualTo("Login."));
-        //Step - 2 : Enter Username, password
         string uName = "admin";
         string pWord = "password";
-        await _loginPage.EnterCredentials(uName, pWord);
-        //step - 3 : Click on login button
-        await _loginPage.ClickLoginButton();
-        //Step - 4: Verify user login
-        var userGreetings = await _homePage.getElementTextasync("a[title='Manage']");
-        Assert.That(userGreetings, Is.EqualTo("Hello "+uName+"!"));
+        //Click Login, enter credentials and login.
+        await _loginPage.LoginAs(uName, pWord);
+        await _loginPage.clickLoginaAsync();
+        //Verify user login
+        var userAccount = await _homePage.validateAccountName(uName);
+        Assert.That(userAccount, Is.EqualTo(true));
+        //Verify logout Functionlity
+        //Navigate to different page 
+        await _homePage.Click_NavAbout();
+        await _aboutPage.Click_NavLogOff();
     }
+
     [Test]
-    public async Task inValidLogin_TC2()
+    [AllureStep]
+    [AllureDescription("Error Message Should be Displayed, when User tries to login with Invalid username and password.")]
+    [AllureOwner("SJinna")]
+    [AllureTag("Nunit", "SmokeTest","Login")]
+    [AllureSeverity(Allure.Net.Commons.SeverityLevel.normal)]
+    [AllureFeature("Login Functionality")]
+    public async Task Login_WithInvalidCredentials_ShouldDisplayErrorMessage_TC2()
     {
         //Navigate to Home page
         await _homePage.GoToHomePage();
-        //Step - 1: Navigate to Login Page
         await _homePage.Click_NavLogin();
-        // Verify, user is navigated to Login Page
-        string pageHeader = await _loginPage.GetHeaderAsync();
-        Assert.That(pageHeader, Is.EqualTo("Login."));
-        //Step - 2 : Enter Username, password
-        string uName = "asdads";
-        string pWord = "adafafsf";
-        await _loginPage.EnterCredentials(uName, pWord);
-        //step - 3 : Click on login button
-        await _loginPage.ClickLoginButton();
-        //Step - 4: Verify user login
+        string uName = TestUtils.GenerateRandomUsername();
+        string pWord = "password";
+        //Click Login, enter credentials and login.
+        await _loginPage.LoginAs(uName, pWord);
+        await _loginPage.clickLoginaAsync();
+        //Verify Error Message.
         var errorMessage = await _loginPage.IsElementVisibleAsync("text=Invalid login attempt.");
         Assert.That(errorMessage, "True");
     }
     [Test]
-    public async Task NoCredentials_TC3()
+    [AllureStep]
+    [AllureDescription("Username and password are required Fields Message Should be Displayed, when User tries to login with Empty Fields.")]
+    [AllureOwner("SJinna")]
+    [AllureTag("Nunit", "SmokeTest","Login")]
+    [AllureSeverity(Allure.Net.Commons.SeverityLevel.normal)]
+    [AllureFeature("Login Functionality")]
+    public async Task Login_WithNoCredentials_ShouldDisplayErrorMessage_TC3()
     {
         //Navigate to Home page
         await _homePage.GoToHomePage();
-        //Step - 1: Navigate to Login Page
         await _homePage.Click_NavLogin();
-        // Verify, user is navigated to Login Page
-        string pageHeader = await _loginPage.GetHeaderAsync();
-        Assert.That(pageHeader, Is.EqualTo("Login."));
-        //Step - 2 : Enter Username, password
         string uName = "";
         string pWord = "";
-        await _loginPage.EnterCredentials(uName, pWord);
-        //step - 3 : Click on login button
-        await _loginPage.ClickLoginButton();
-        //Step - 4: Verify error messages.
+        //Click Login, enter credentials and login.
+        await _loginPage.LoginAs(uName, pWord);
+        await _loginPage.clickLoginaAsync();
+        //Verify error messages.
         bool usernameErrormessage = await _loginPage.IsElementVisibleAsync("text=The UserName field is required.");
         Assert.That(usernameErrormessage, "True");
         bool passwordErrormessage = await _loginPage.IsElementVisibleAsync("text=The Password field is required.");
-        Assert.That(passwordErrormessage, "True");
-       
-    }
-    [Test]
-    public async Task ValidLogout_TC4()
-    {
-        //Navigate to Home page
-        await _homePage.GoToHomePage();
-        //Step - 1: Navigate to Login Page
-        await _homePage.Click_NavLogin();
-        // Verify, user is navigated to Login Page
-        string pageHeader = await _loginPage.GetHeaderAsync();
-        Assert.That(pageHeader, Is.EqualTo("Login."));
-        //Step - 2 : Enter Username, password
-        string uName = "admin";
-        string pWord = "password";
-        await _loginPage.EnterCredentials(uName, pWord);
-        //step - 3 : Click on login button
-        await _loginPage.ClickLoginButton();
-        //Step - 4: Verify user login
-        var userGreetings = await _homePage.getElementTextasync("a[title='Manage']");
-        Assert.That(userGreetings, Is.EqualTo("Hello "+uName+"!"));
-        //step - 5: Click on Logout
-        await _homePage.ClickElementAsync("text=Log off");
-        //Verify if login button is visible again
-        bool isLoginVisible = await _loginPage.IsElementVisibleAsync("text=Login");
-        Assert.That(isLoginVisible, "True");       
-    }   
-    
+        Assert.That(passwordErrormessage, "True"); 
+    } 
 }

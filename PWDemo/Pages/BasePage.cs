@@ -1,5 +1,6 @@
-using System.Security.Cryptography.X509Certificates;
+using Allure.NUnit.Attributes;
 using Microsoft.Playwright;
+using PWDemo;
 
 public abstract class BasePage
 {
@@ -88,31 +89,49 @@ public abstract class BasePage
         }
          return navTextList;
     }
-    //Implementing Network Listneres - Where Url Is verified, if user is navigate to correct page.
+
+    //Implemented Network Listneres for all the navigation links
+    //Url Is verified, if user is navigate to correct page.
+    [AllureStep("Click on Home on navigation bar.")]
     public async Task Click_NavHome()
     {
-        await ClickElementAsync("text=Home");
+        await _page.ClickAsync("text=Home");
+        await _page.WaitForURLAsync("http://www.eaapp.somee.com/"); 
     }
+    [AllureStep("Click on Abuot on navigation bar.")]
     public async Task Click_NavAbout()
     {
-        await ClickElementAsync("text=About");
-        await _page.WaitForURLAsync("**/About");
+        await _page.ClickAsync("text=About");
+        await _page.WaitForURLAsync("http://www.eaapp.somee.com/Home/About");
     }
+    [AllureStep("Click on Employee list on navigation bar.")]
     public async Task Click_NavEmployeeList()
     {
-        //await _page.RunAndWaitForResponseAsync(async()=> await ClickElementAsync("text=Employee List"), x => x.Url.Contains("/Employee"));
-        await _page.RunAndWaitForRequestAsync(async()=> await ClickElementAsync("text=Employee List"), x => x.Url.Contains("/Employee"));
-    } 
+        await _page.ClickAsync("text=Employee");
+        await _page.WaitForURLAsync("http://www.eaapp.somee.com/Employee");
+    }
+    [AllureStep("Click on Login on navigation bar.")] 
     public async Task Click_NavLogin()
     {
-        await ClickElementAsync("text=Login");
-        
-        await _page.WaitForURLAsync("**/Login");
+        await _page.ClickAsync("text=Login");
+        await _page.WaitForURLAsync("http://www.eaapp.somee.com/Account/Login");
     }
+    [AllureStep("Click on Register on navigation bar.")]
     public async Task Click_NavRegister()
     {
-        await ClickElementAsync("text=Register");
-        await _page.WaitForURLAsync("**/Register");
+        await _page.ClickAsync("text=Register");
+        await _page.WaitForURLAsync("http://www.eaapp.somee.com/Account/Register");
     }
-    
+    [AllureStep("Logout of User account.")]
+    public async Task Click_NavLogOff()
+    {
+        await _page.ClickAsync("text=Log off");
+    }
+    [AllureStep("Verify username is {0} on manage account button")]
+    public async Task<bool> validateAccountName(string uName)
+    {   
+        var actualUsername =  await _page.GetByTitle("Manage").InnerTextAsync();
+        var expectedUsername = $"Hello {uName}!";
+        return actualUsername == expectedUsername ? true : false;
+    }
 }
