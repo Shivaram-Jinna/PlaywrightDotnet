@@ -8,23 +8,31 @@ public class EmployeePage : BasePage
     public EmployeePage(IPage page) : base(page){
 
     }
+    //page specific Web Elements and locators
+    private ILocator searchNameField => _page.Locator("[name='searchTerm']");
+    private ILocator searchButton => _page.Locator("[value='Search']");
+    private ILocator CreateNewButton => _page.Locator("text=Create New");
+    private ILocator emp_DeleteButton => _page.Locator("text=Delete");
+    private ILocator emp_EditButton => _page.Locator("text=Edit");
+    
+
     [AllureStep("Search Employee with username {0}")]
     public async Task searchEmployee(string name)
     {
-        await _page.FillAsync("[name='searchTerm']", name);
-        await _page.ClickAsync("[value='Search']");
+        await searchNameField.FillAsync(name);
+        await searchButton.ClickAsync();
     }
 
     [AllureStep("Click Create Button, on Employee list Page.")]
-    public async Task clickCreateNewAsync()
+    public async Task click_CreateNewAsync()
     {
-        await _page.Locator("text=Create New").ClickAsync();
+        await CreateNewButton.ClickAsync();
     }
 
     [AllureStep("Click Delete Employee.")]
     public async Task clickDeleteAsync()
     {
-        await _page.Locator("text=Delete").ClickAsync();
+        await emp_DeleteButton.ClickAsync();
     }
 
     [AllureStep("Getting Actual Employee details on the list")]
@@ -44,19 +52,19 @@ public class EmployeePage : BasePage
         return ActualEmpDetails;
     }
     
-    [AllureStep("Comparing Actual Employee details,, with Expected Deatils")]
-    public async Task<bool> verifyEmployee(string Expectedname, string Expectedsalary, string ExpecteddurationWorked, string ExpectedEmpgrade, string Expectedemail)
+    [AllureStep("Comparing Actual Employee details, with Expected Deatils")]
+    public async Task verifyEmployee(string Expectedname, string Expectedsalary, string ExpecteddurationWorked, string ExpectedEmpgrade, string Expectedemail)
     {
         //bool result = true; // Assume all are true initially
         List<string> ExpectedEmpDetails = new List<string> { Expectedname, Expectedsalary, ExpecteddurationWorked, ExpectedEmpgrade, Expectedemail };
         List<string> ActualEmpDetails = await getEmpDetails();
         //Assert.That(ActualEmpDetails, Is.EquivalentTo(ExpectedEmpDetails));
-        return ActualEmpDetails.SequenceEqual(ExpectedEmpDetails);
+        Assert.That(ActualEmpDetails, Is.EqualTo(ExpectedEmpDetails));
     }
     [AllureStep("Click Edit Employee Button.")]
     public async Task editEmployee()
     {
-        await _page.ClickAsync("text=Edit");
+        await emp_EditButton.ClickAsync();
     }
 
 

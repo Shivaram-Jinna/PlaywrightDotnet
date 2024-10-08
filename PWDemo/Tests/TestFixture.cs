@@ -1,4 +1,8 @@
+using Allure.Commons;
+using Allure.NUnit;
+using Allure.NUnit.Attributes;
 using Microsoft.Playwright;
+using PWDemo;
 using PWDemo.Pages;
 
 //Enabling parallel runs at assembly level
@@ -22,6 +26,7 @@ public class TestFixture
     protected DeleteEmployeePage _deleteEmployeePage;
 
     [SetUp]
+    [AllureStep("Setting up test environment")]
     public async Task Setup()
     {
 
@@ -36,9 +41,10 @@ public class TestFixture
                 "webkit" => await _playwright.Webkit.LaunchAsync(new BrowserTypeLaunchOptions { Headless = _config.Headless }),
                 _ => await _playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions { Headless = _config.Headless }),
             };
+
         
         _page = await _browser.NewPageAsync();
-
+        
         // Initialize page objects
         _homePage = new HomePage(_page);
         _loginPage = new LoginPage(_page);
@@ -50,10 +56,13 @@ public class TestFixture
         _deleteEmployeePage = new DeleteEmployeePage(_page);
     }
 
+
     [TearDown]
+    [AllureStep("Tearing down test environment")]
     public async Task TearDown()
     {
         await _browser.CloseAsync();
         _playwright.Dispose();
+        
     }
 }

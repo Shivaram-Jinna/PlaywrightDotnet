@@ -1,5 +1,6 @@
 using Allure.NUnit;
 using Allure.NUnit.Attributes;
+using static PWDemo.Pages.LoginPage;
 
 namespace PWDemo;
 
@@ -19,19 +20,18 @@ public class UserLoginTest : TestFixture
     {
         //Navigate to Home page
         await _homePage.GoToHomePage();
-        await _homePage.Click_NavLogin();
+        await _homePage.Click_NavBar_Login();
         string uName = "admin";
         string pWord = "password";
         //Click Login, enter credentials and login.
         await _loginPage.LoginAs(uName, pWord);
-        await _loginPage.clickLoginaAsync();
+        await _loginPage.clickLoginAsync();
         //Verify user login
-        var userAccount = await _homePage.validateAccountName(uName);
-        Assert.That(userAccount, Is.EqualTo(true));
+        await _homePage.validate_AccountName(uName);
         //Verify logout Functionlity
         //Navigate to different page 
-        await _homePage.Click_NavAbout();
-        await _aboutPage.Click_NavLogOff();
+        await _homePage.Click_NavBar_About();
+        await _aboutPage.Click_NavBar_LogOff();
     }
 
     [Test]
@@ -45,15 +45,15 @@ public class UserLoginTest : TestFixture
     {
         //Navigate to Home page
         await _homePage.GoToHomePage();
-        await _homePage.Click_NavLogin();
+        await _homePage.Click_NavBar_Login();
         string uName = TestUtils.GenerateRandomUsername();
         string pWord = "password";
-        //Click Login, enter credentials and login.
+        //enter credentials and click login.
         await _loginPage.LoginAs(uName, pWord);
-        await _loginPage.clickLoginaAsync();
+        await _loginPage.clickLoginAsync();
         //Verify Error Message.
-        var errorMessage = await _loginPage.IsElementVisibleAsync("text=Invalid login attempt.");
-        Assert.That(errorMessage, "True");
+        string expectedErroMessage = "Invalid login attempt.";
+        await _loginPage.validateErrorMessage(loginPageElements.invalidLoginError, expectedErroMessage);
     }
     [Test]
     [AllureStep]
@@ -66,16 +66,14 @@ public class UserLoginTest : TestFixture
     {
         //Navigate to Home page
         await _homePage.GoToHomePage();
-        await _homePage.Click_NavLogin();
-        string uName = "";
-        string pWord = "";
+        await _homePage.Click_NavBar_Login();
         //Click Login, enter credentials and login.
-        await _loginPage.LoginAs(uName, pWord);
-        await _loginPage.clickLoginaAsync();
+        await _loginPage.LoginAs("", "");
+        await _loginPage.clickLoginAsync();
         //Verify error messages.
-        bool usernameErrormessage = await _loginPage.IsElementVisibleAsync("text=The UserName field is required.");
-        Assert.That(usernameErrormessage, "True");
-        bool passwordErrormessage = await _loginPage.IsElementVisibleAsync("text=The Password field is required.");
-        Assert.That(passwordErrormessage, "True"); 
+        string expected_UN_error = "The UserName field is required.";
+        string expected_PW_error = "The Password field is required.";
+        await _loginPage.validateErrorMessage(loginPageElements.UserNameError, expected_UN_error);
+        await _loginPage.validateErrorMessage(loginPageElements.PasswordError, expected_PW_error);
     } 
 }

@@ -1,4 +1,6 @@
 using System.Text;
+using Allure.Commons;
+using Microsoft.Playwright;
 namespace PWDemo;
 public static class TestUtils
 {
@@ -21,4 +23,5 @@ public static class TestUtils
     {
         return $"{GenerateRandomUsername()}@example.com";
     }
+    
 }

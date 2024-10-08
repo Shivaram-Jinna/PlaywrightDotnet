@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Allure.NUnit;
 using Allure.NUnit.Attributes;
 
@@ -17,7 +18,7 @@ public class RegisterUserTests : TestFixture
         //step - 1: Navigate to homePage
         await _homePage.GoToHomePage();
         //step - 2: Navigate to RegisterPage
-        await _homePage.Click_NavRegister();
+        await _homePage.Click_NavBar_Register();
         //step - 3: Verify if naviagted to RegisterPage.
         var pageHeader = await _registerPage.GetHeaderAsync();
         Assert.That(pageHeader, Is.EqualTo("Register."));
@@ -29,8 +30,7 @@ public class RegisterUserTests : TestFixture
         await _registerPage.RegisterUser(uName, password, cPassword,emailAddress);
         await _registerPage.clickRegisterAsync();
         //Step - 6: Verify if the user is Succesfully Registered
-        var userAccount = await _homePage.validateAccountName(uName);
-        Assert.That(userAccount, Is.EqualTo(true));
+        await _homePage.validate_AccountName(uName);
         
     }
     [Test]
@@ -45,7 +45,7 @@ public class RegisterUserTests : TestFixture
         //step - 1: Navigate to homePage
         await _homePage.GoToHomePage();
         //step - 2: Navigate to RegisterPage
-        await _homePage.Click_NavRegister();
+        await _homePage.Click_NavBar_Register();
         //step - 3: Verify if naviagted to RegisterPage.
         var pageHeader = await _registerPage.GetHeaderAsync();
         Assert.That(pageHeader, Is.EqualTo("Register."));
@@ -57,12 +57,13 @@ public class RegisterUserTests : TestFixture
         await _registerPage.RegisterUser(uName, password, cPassword,emailAddress);
         await _registerPage.clickRegisterAsync();
         //Step - 7: Verify if the application displays, error message
-        var UserName_Invalid = await _registerPage.IsElementVisibleAsync("text=The UserName field is required.");
-        Assert.That(UserName_Invalid, "True");
-        var Password_Invalid = await _registerPage.IsElementVisibleAsync("text=The Password field is required.");
-        Assert.That(UserName_Invalid, "True");
-        var Email_Invalid = await _registerPage.IsElementVisibleAsync("text=The Email field is required.");
-        Assert.That(UserName_Invalid, "True");
+        List<string> expectedErrorMessage = new List<string> 
+        {
+            "The UserName field is required.",
+            "The Password field is required.",
+            "The Email field is required."
+        };
+        await _registerPage.ValidateErrorMessages(expectedErrorMessage);
     }
 
     [Test]
@@ -75,7 +76,7 @@ public class RegisterUserTests : TestFixture
     public async Task RegisterUser_WithExsitingDetails_ShouldDisplayErrorMessage_TC7()
     {
         await _homePage.GoToHomePage();
-        await _homePage.Click_NavRegister();
+        await _homePage.Click_NavBar_Register();
         var pageHeader = await _registerPage.GetHeaderAsync();
         Assert.That(pageHeader, Is.EqualTo("Register."));
         string uName = TestUtils.GenerateRandomUsername();
@@ -84,19 +85,20 @@ public class RegisterUserTests : TestFixture
         string emailAddress = TestUtils.GenerateRandomEmail();
         await _registerPage.RegisterUser(uName, password, cPassword,emailAddress);
         await _registerPage.clickRegisterAsync();
-        var userAccount = await _homePage.validateAccountName(uName);
-        Assert.That(userAccount, Is.EqualTo(true));
+        await _homePage.validate_AccountName(uName);
         //Logout of the account 
-        await _homePage.Click_NavLogOff();
-        await _homePage.Click_NavRegister();
+        await _homePage.Click_NavBar_LogOff();
+        await _homePage.Click_NavBar_Register();
         await _registerPage.RegisterUser(uName, password, cPassword,emailAddress);
         await _registerPage.clickRegisterAsync();
         //Step - 6: Verify if the error messages are diaplyed
-        string UN_errorMessage = "text=Name "+uName+" is already taken.";
-        var UserNameError = await _registerPage.IsElementVisibleAsync(UN_errorMessage);
-        Assert.That(UserNameError, "True");
-        string EM_errorMessage = "text=Email "+emailAddress+" is already taken.";
-        var EmailError = await _registerPage.IsElementVisibleAsync(EM_errorMessage);
-        Assert.That(UserNameError, "True");
+        List<string> expectedErrorMessage = new List<string> 
+        {
+            "Name "+uName+" is already taken.",
+            "Email '"+emailAddress+"' is already taken."
+        };
+        await _registerPage.ValidateErrorMessages(expectedErrorMessage);
     } 
+    
+    //More TestCases Can Be Added.
 }

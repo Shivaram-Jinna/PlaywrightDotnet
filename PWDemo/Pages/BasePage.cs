@@ -46,29 +46,25 @@ public abstract class BasePage
         return await _page.TitleAsync();
     }
     // Method to check if an element is visible
-     public async Task<bool> IsElementVisibleAsync(string selector)
+     public async Task IsElementVisibleAsync(string selector)
     {
+        bool isExist;
         try
         {
             var element = await _page.QuerySelectorAsync(selector);
-            return element != null && await element.IsVisibleAsync();
+            isExist = element != null ? await element.IsVisibleAsync() : false;
         }
-        catch
+        catch(NullReferenceException ex)
         {
-            return false;
+            Console.WriteLine(ex.Message);
+            isExist = false;
         }
+        Assert.That(isExist, Is.True);
     }
     public async Task<string> getElementTextasync(string selector)
     {
             var textValue = await _page.Locator(selector).TextContentAsync();
             return textValue ?? String.Empty;            
-    }
-    public async Task takeScreenshot()
-    {
-        await _page.ScreenshotAsync(new PageScreenshotOptions
-        {
-            Path = "/Users/shivaramjinna/Desktop/PlaywrightDotnet/PWDemo/Test_ScreenShots/screenshot.png" // Specify the file path
-        });
     }
     public async Task<string> GetHeaderAsync()
     {
@@ -93,45 +89,45 @@ public abstract class BasePage
     //Implemented Network Listneres for all the navigation links
     //Url Is verified, if user is navigate to correct page.
     [AllureStep("Click on Home on navigation bar.")]
-    public async Task Click_NavHome()
+    public async Task Click_NavBar_Home()
     {
         await _page.ClickAsync("text=Home");
         await _page.WaitForURLAsync("http://www.eaapp.somee.com/"); 
     }
     [AllureStep("Click on Abuot on navigation bar.")]
-    public async Task Click_NavAbout()
+    public async Task Click_NavBar_About()
     {
         await _page.ClickAsync("text=About");
         await _page.WaitForURLAsync("http://www.eaapp.somee.com/Home/About");
     }
     [AllureStep("Click on Employee list on navigation bar.")]
-    public async Task Click_NavEmployeeList()
+    public async Task Click_NavBar_EmployeeList()
     {
         await _page.ClickAsync("text=Employee");
         await _page.WaitForURLAsync("http://www.eaapp.somee.com/Employee");
     }
     [AllureStep("Click on Login on navigation bar.")] 
-    public async Task Click_NavLogin()
+    public async Task Click_NavBar_Login()
     {
         await _page.ClickAsync("text=Login");
         await _page.WaitForURLAsync("http://www.eaapp.somee.com/Account/Login");
     }
     [AllureStep("Click on Register on navigation bar.")]
-    public async Task Click_NavRegister()
+    public async Task Click_NavBar_Register()
     {
         await _page.ClickAsync("text=Register");
         await _page.WaitForURLAsync("http://www.eaapp.somee.com/Account/Register");
     }
     [AllureStep("Logout of User account.")]
-    public async Task Click_NavLogOff()
+    public async Task Click_NavBar_LogOff()
     {
         await _page.ClickAsync("text=Log off");
     }
-    [AllureStep("Verify username is {0} on manage account button")]
-    public async Task<bool> validateAccountName(string uName)
+    [AllureStep("Verify username is {0} on manage account Section on Naviagtion bar.")]
+    public async Task validate_AccountName(string uName)
     {   
         var actualUsername =  await _page.GetByTitle("Manage").InnerTextAsync();
         var expectedUsername = $"Hello {uName}!";
-        return actualUsername == expectedUsername ? true : false;
+        Assert.That(actualUsername, Is.EqualTo(expectedUsername));
     }
 }
