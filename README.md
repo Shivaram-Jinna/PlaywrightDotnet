@@ -82,9 +82,21 @@ To run tests, run the following command
 ```bash
   dotnet test
 ```
+## Allure Reports
+
+```bash
+  dotnet add package Allure.Commons
+  dotnet add package Allure.NUnit
+```
+  ### Generate Allure Reports
+   * Run All your testcases
+   * Genereate report: after tests are run, run the following command
+     ```bash
+     allure serve [path to your allure-results folder]
+     ```
+   * Results are opened in your Default browser.
 ## Future Enhancements
 
-* Allure Reporting: Integration with Allure for generating detailed test reports.
 * Continuous Integration (CI): Set up a CI pipeline for automated test execution.
 * Web-Based Test Case Management: Develop a web-based application where users can easily create and manage test cases. The application will provide an intuitive interface, allowing users to:  
   * Select a page or component from a list of predefined options.
