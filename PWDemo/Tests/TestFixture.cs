@@ -31,9 +31,9 @@ public class TestFixture
         
         _browser = _config.BrowserType switch
             {
-                "firefox" => await _playwright.Firefox.LaunchAsync(new BrowserTypeLaunchOptions { Headless = true }),
-                "webkit" => await _playwright.Webkit.LaunchAsync(new BrowserTypeLaunchOptions { Headless = true }),
-                _ => await _playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions { Headless = true }),
+                "firefox" => await _playwright.Firefox.LaunchAsync(new BrowserTypeLaunchOptions { Headless = _config.Headless }),
+                "webkit" => await _playwright.Webkit.LaunchAsync(new BrowserTypeLaunchOptions { Headless = _config.Headless }),
+                _ => await _playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions { Headless = _config.Headless }),
             };        
         _page = await _browser.NewPageAsync();
 
