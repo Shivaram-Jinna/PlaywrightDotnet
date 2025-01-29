@@ -1,4 +1,3 @@
-using Allure.NUnit.Attributes;
 using Microsoft.Playwright;
 
 namespace PWDemo.Pages;
@@ -15,27 +14,20 @@ public class EmployeePage : BasePage
     private ILocator emp_DeleteButton => _page.Locator("text=Delete");
     private ILocator emp_EditButton => _page.Locator("text=Edit");
     
-
-    [AllureStep("Search Employee with username {0}")]
     public async Task searchEmployee(string name)
     {
         await searchNameField.FillAsync(name);
         await searchButton.ClickAsync();
     }
-
-    [AllureStep("Click Create Button, on Employee list Page.")]
     public async Task click_CreateNewAsync()
     {
         await CreateNewButton.ClickAsync();
     }
 
-    [AllureStep("Click Delete Employee.")]
     public async Task clickDeleteAsync()
     {
         await emp_DeleteButton.ClickAsync();
     }
-
-    [AllureStep("Getting Actual Employee details on the list")]
     public async Task<List<string>> getEmpDetails()
     {
         var EmpDeatils = await _page.Locator("tr td ").AllAsync(); 
@@ -52,7 +44,6 @@ public class EmployeePage : BasePage
         return ActualEmpDetails;
     }
     
-    [AllureStep("Comparing Actual Employee details, with Expected Deatils")]
     public async Task verifyEmployee(string Expectedname, string Expectedsalary, string ExpecteddurationWorked, string ExpectedEmpgrade, string Expectedemail)
     {
         //bool result = true; // Assume all are true initially
@@ -61,7 +52,6 @@ public class EmployeePage : BasePage
         //Assert.That(ActualEmpDetails, Is.EquivalentTo(ExpectedEmpDetails));
         Assert.That(ActualEmpDetails, Is.EqualTo(ExpectedEmpDetails));
     }
-    [AllureStep("Click Edit Employee Button.")]
     public async Task editEmployee()
     {
         await emp_EditButton.ClickAsync();

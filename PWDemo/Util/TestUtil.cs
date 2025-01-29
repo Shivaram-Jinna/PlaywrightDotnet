@@ -1,3 +1,4 @@
+using System.Reflection;
 using System.Text;
 using Allure.Commons;
 using Microsoft.Playwright;
@@ -23,5 +24,16 @@ public static class TestUtils
     {
         return $"{GenerateRandomUsername()}@example.com";
     }
-    
+    // ScreenShotMethod
+    public static async Task take_ScreenShot(IPage page, string stepDetail, Status status = Status.passed)
+    {
+        if (AllureLifecycle.Instance == null)
+        {
+            throw new InvalidOperationException("Allure lifecycle is not properly initialized.");
+        }
+        byte[] bytes = await page.ScreenshotAsync(new PageScreenshotOptions{
+            Path=$"/Users/shivaramjinna/Desktop/PlaywrightDotnet/PWDemo/bin/Debug/net8.0/Test_ScreenShots/{stepDetail}.png"
+        });
+        AllureLifecycle.Instance.AddAttachment(stepDetail, "image/png", bytes);
+    }
 }

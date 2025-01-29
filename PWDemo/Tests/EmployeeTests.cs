@@ -1,17 +1,7 @@
-using Allure.NUnit;
-using Allure.NUnit.Attributes;
-
 namespace PWDemo;
-[AllureNUnit]
 public class EmployeeTest : TestFixture
 {
     [Test]
-    [AllureStep]
-    [AllureDescription("Admin Should be able to add new employee and verify details are displayed properly.")]
-    [AllureOwner("SJinna")]
-    [AllureTag("Nunit", "SmokeTest","AddEmployee")]
-    [AllureSeverity(Allure.Net.Commons.SeverityLevel.normal)]
-    [AllureFeature("AddEmployee Functionality")]
     public async Task Verify_CanAddEmployee_WithValidDetails_TC11()
     //Merged TestCase : Verify_UserCan_ViewEmployeeDetails_TC14
     {
@@ -43,12 +33,6 @@ public class EmployeeTest : TestFixture
     }
 
     [Test]
-    [AllureStep]
-    [AllureDescription("Admin Should be able to Edit employee Details and verify Employee deatils should be updated.")]
-    [AllureOwner("SJinna")]
-    [AllureTag("Nunit", "SmokeTest","EditEmployee")]
-    [AllureSeverity(Allure.Net.Commons.SeverityLevel.normal)]
-    [AllureFeature("EditEmployee Functionality")]
     public async Task Verify_UserCan_Edit_EmployeeDetails_TC12()
     {
         //Login navigate to home page
@@ -89,12 +73,6 @@ public class EmployeeTest : TestFixture
         await _employeePage.verifyEmployee(empName,empsalary,empDWorked, empGrade, empEmail);
     }
     [Test]
-    [AllureStep]
-    [AllureDescription("Admin Should e able to delete an employee.")]
-    [AllureOwner("SJinna")]
-    [AllureTag("Nunit", "SmokeTest","DeleteEmployee")]
-    [AllureSeverity(Allure.Net.Commons.SeverityLevel.normal)]
-    [AllureFeature("DeleteEmployee Functionality")]
     public async Task Verify_UserCan_DeleteEmployee_TC13()
     {
         //Login navigate to home page

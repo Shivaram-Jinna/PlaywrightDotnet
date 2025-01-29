@@ -1,20 +1,10 @@
-using Allure.NUnit;
-using Allure.NUnit.Attributes;
 using static PWDemo.Pages.LoginPage;
 
 namespace PWDemo;
 
-[AllureNUnit]
 public class UserLoginTest : TestFixture
 {
-    [Test]
-    [AllureStep]
-    [AllureDescription("User should be able to login with Valid username and password, and Navigate to Home Page.")]
-    [AllureOwner("SJinna")]
-    [AllureTag("Nunit", "SmokeTest","Login")]
-    //[Category("Login_Functionality")]
-    [AllureSeverity(Allure.Net.Commons.SeverityLevel.normal)]
-    [AllureFeature("Login Functionality")]  
+    [Test] 
     public async Task Login_WithValidCredentials_ShouldRedirectToDashboard_TC1()
     //Merged Testcase -  Logout_ShouldRedirectToDashboard_TC4
     {
@@ -35,12 +25,6 @@ public class UserLoginTest : TestFixture
     }
 
     [Test]
-    [AllureStep]
-    [AllureDescription("Error Message Should be Displayed, when User tries to login with Invalid username and password.")]
-    [AllureOwner("SJinna")]
-    [AllureTag("Nunit", "SmokeTest","Login")]
-    [AllureSeverity(Allure.Net.Commons.SeverityLevel.normal)]
-    [AllureFeature("Login Functionality")]
     public async Task Login_WithInvalidCredentials_ShouldDisplayErrorMessage_TC2()
     {
         //Navigate to Home page
@@ -56,12 +40,6 @@ public class UserLoginTest : TestFixture
         await _loginPage.validateErrorMessage(loginPageElements.invalidLoginError, expectedErroMessage);
     }
     [Test]
-    [AllureStep]
-    [AllureDescription("Username and password are required Fields Message Should be Displayed, when User tries to login with Empty Fields.")]
-    [AllureOwner("SJinna")]
-    [AllureTag("Nunit", "SmokeTest","Login")]
-    [AllureSeverity(Allure.Net.Commons.SeverityLevel.normal)]
-    [AllureFeature("Login Functionality")]
     public async Task Login_WithNoCredentials_ShouldDisplayErrorMessage_TC3()
     {
         //Navigate to Home page

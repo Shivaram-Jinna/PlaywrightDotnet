@@ -1,13 +1,9 @@
-using Allure.Commons;
-using Allure.NUnit;
-using Allure.NUnit.Attributes;
 using Microsoft.Playwright;
-using PWDemo;
 using PWDemo.Pages;
 
 //Enabling parallel runs at assembly level
-[assembly: Parallelizable(ParallelScope.Fixtures)]
-[assembly: LevelOfParallelism(4)]
+//[assembly: Parallelizable(ParallelScope.Fixtures)]
+//[assembly: LevelOfParallelism(4)]
 public class TestFixture
 {
     protected IPlaywright _playwright;
@@ -26,10 +22,8 @@ public class TestFixture
     protected DeleteEmployeePage _deleteEmployeePage;
 
     [SetUp]
-    [AllureStep("Setting up test environment")]
     public async Task Setup()
     {
-
         //Load Test Environment Configurations.
          _config = ConfigLoader.LoadConfiguration();
 
@@ -40,12 +34,11 @@ public class TestFixture
                 "firefox" => await _playwright.Firefox.LaunchAsync(new BrowserTypeLaunchOptions { Headless = _config.Headless }),
                 "webkit" => await _playwright.Webkit.LaunchAsync(new BrowserTypeLaunchOptions { Headless = _config.Headless }),
                 _ => await _playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions { Headless = _config.Headless }),
-            };
-
-        
+            };        
         _page = await _browser.NewPageAsync();
-        
-        // Initialize page objects
+
+
+        // // Initialize page objects
         _homePage = new HomePage(_page);
         _loginPage = new LoginPage(_page);
         _registerPage = new RegisterPage(_page);
@@ -55,14 +48,10 @@ public class TestFixture
         _editEmployeePage = new EditEmployeePage(_page);
         _deleteEmployeePage = new DeleteEmployeePage(_page);
     }
-
-
     [TearDown]
-    [AllureStep("Tearing down test environment")]
     public async Task TearDown()
     {
         await _browser.CloseAsync();
         _playwright.Dispose();
-        
     }
 }

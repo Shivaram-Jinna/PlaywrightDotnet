@@ -1,17 +1,7 @@
-using Allure.NUnit;
-using Allure.NUnit.Attributes;
-
 namespace PWDemo;
-[AllureNUnit]
 public class HomePageNavigationTest : TestFixture
 {
     [Test]
-    [AllureStep]
-    [AllureDescription("Clicking Navigation bar links should navigate usr to appropiate pages.")]
-    [AllureOwner("SJinna")]
-    [AllureTag("Nunit", "SmokeTest","NavigationLinks")]
-    [AllureSeverity(Allure.Net.Commons.SeverityLevel.normal)]
-    [AllureFeature("Navigation Functionality")]
     public async Task Verify_UserCanSwitch_ThroughNavigationLinks_TC8()
     {
         //step - 1: Navigate to HomePage
@@ -24,12 +14,6 @@ public class HomePageNavigationTest : TestFixture
         await _homePage.Click_NavBar_Login();
     }
     [Test]
-    [AllureStep]
-    [AllureDescription("Navigation Links Should Be Consistent in all the pages.")]
-    [AllureOwner("SJinna")]
-    [AllureTag("Nunit", "SmokeTest","NavigationLinks")]
-    [AllureSeverity(Allure.Net.Commons.SeverityLevel.normal)]
-    [AllureFeature("Navigation Functionality")]
     public async Task Verify_UserSwitchPages_NavigationLinks_Consitant_TC9()
     {
         await _homePage.GoToHomePage();

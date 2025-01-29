@@ -1,6 +1,4 @@
-using Allure.NUnit.Attributes;
 using Microsoft.Playwright;
-using NUnit.Framework.Constraints;
 
 namespace PWDemo.Pages;
 public class RegisterPage : BasePage
@@ -38,27 +36,22 @@ public class RegisterPage : BasePage
             _ => throw new ArgumentException($"No locator found for element name: {elementName}", nameof(elementName))
         };
     }
-    [AllureStep("Enter {0} in to username text Field")]
     public async Task enterUsername(string username)
     {
         await UserNameInput.FillAsync(username);
     }
-    [AllureStep("Enter {0} in to Password Field")]
     public async Task enterPassword(string password)
     {
         await PasswordInput.FillAsync(password);
     }
-    [AllureStep("Enter {0} in to Confirm Password Field")]
     public async Task enterConfirmPassword(string confirmPassword)
     {
         await ConfirmPasswordInput.FillAsync(confirmPassword);
     }
-    [AllureStep("Enter {0} in to Email Field")]
     public async Task enterEmail(string emailID)
     {
         await EmailInput.FillAsync(emailID);
     }
-    [AllureStep("Register new User with Username {0}, Password {1}, Confirm Password {2}, Email {3}, And click on Register Button")]
     public async Task RegisterUser(string username, string password, string confirmPassword, string email)
     {
         await enterUsername(username);
@@ -66,12 +59,10 @@ public class RegisterPage : BasePage
         await enterConfirmPassword(confirmPassword);
         await enterEmail(email);
     }
-    [AllureStep("Click on Register Button")]
     public async Task clickRegisterAsync()
     {
         await RegisterButton.ClickAsync();
     }
-    [AllureStep("Verify Error Messages in the following Order: {0}")]
     public async Task ValidateErrorMessages(List<string> expectedErrorMessagesList)
     {
         var errorMessagesGroup = await _page.Locator(".text-danger").GetByRole(AriaRole.Listitem).AllAsync();

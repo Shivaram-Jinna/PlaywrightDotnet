@@ -1,18 +1,7 @@
-using System.Collections.Generic;
-using Allure.NUnit;
-using Allure.NUnit.Attributes;
-
 namespace PWDemo;
-[AllureNUnit]
 public class RegisterUserTests : TestFixture
 {
     [Test]
-    [AllureStep]
-    [AllureDescription("New user registration with valid details, Should login to user account and Navigate to HomePage.")]
-    [AllureOwner("SJinna")]
-    [AllureTag("Nunit", "SmokeTest","UserRegisteration")]
-    [AllureSeverity(Allure.Net.Commons.SeverityLevel.normal)]
-    [AllureFeature("User Registration Functionality")]
     public async Task RegisterUser_WithValidDetails_ShouldRedirectToDashboard_TC5()
     {
         //step - 1: Navigate to homePage
@@ -34,12 +23,6 @@ public class RegisterUserTests : TestFixture
         
     }
     [Test]
-    [AllureStep]
-    [AllureDescription("New user registration with Missing details, Should Display field Error Messages")]
-    [AllureOwner("SJinna")]
-    [AllureTag("Nunit", "SmokeTest","UserRegisteration")]
-    [AllureSeverity(Allure.Net.Commons.SeverityLevel.normal)]
-    [AllureFeature("User Registration Functionality")]
     public async Task RegisterUser_WithMisssingFields_DisplayErrorMessage_TC6()
     {
         //step - 1: Navigate to homePage
@@ -67,12 +50,6 @@ public class RegisterUserTests : TestFixture
     }
 
     [Test]
-    [AllureStep]
-    [AllureDescription("New user registration with Existing User details, Should not Allow User Registration, and Display Erro Message.")]
-    [AllureOwner("SJinna")]
-    [AllureTag("Nunit", "SmokeTest","UserRegisteration")]
-    [AllureSeverity(Allure.Net.Commons.SeverityLevel.normal)]
-    [AllureFeature("User Registration Functionality")]
     public async Task RegisterUser_WithExsitingDetails_ShouldDisplayErrorMessage_TC7()
     {
         await _homePage.GoToHomePage();

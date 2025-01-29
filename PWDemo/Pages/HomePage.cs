@@ -8,7 +8,6 @@ public class HomePage : BasePage
     public HomePage(IPage page) : base(page){
 
     }
-    [AllureStep("Navigate to Home page")]
     public async Task GoToHomePage()
     {
         await GoToAsync("http://www.eaapp.somee.com");

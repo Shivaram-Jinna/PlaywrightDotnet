@@ -1,4 +1,3 @@
-using Allure.NUnit.Attributes;
 using Microsoft.Playwright;
 using PWDemo;
 
@@ -88,42 +87,35 @@ public abstract class BasePage
 
     //Implemented Network Listneres for all the navigation links
     //Url Is verified, if user is navigate to correct page.
-    [AllureStep("Click on Home on navigation bar.")]
     public async Task Click_NavBar_Home()
     {
         await _page.ClickAsync("text=Home");
         await _page.WaitForURLAsync("http://www.eaapp.somee.com/"); 
     }
-    [AllureStep("Click on Abuot on navigation bar.")]
     public async Task Click_NavBar_About()
     {
         await _page.ClickAsync("text=About");
         await _page.WaitForURLAsync("http://www.eaapp.somee.com/Home/About");
     }
-    [AllureStep("Click on Employee list on navigation bar.")]
     public async Task Click_NavBar_EmployeeList()
     {
         await _page.ClickAsync("text=Employee");
         await _page.WaitForURLAsync("http://www.eaapp.somee.com/Employee");
     }
-    [AllureStep("Click on Login on navigation bar.")] 
     public async Task Click_NavBar_Login()
     {
         await _page.ClickAsync("text=Login");
         await _page.WaitForURLAsync("http://www.eaapp.somee.com/Account/Login");
     }
-    [AllureStep("Click on Register on navigation bar.")]
     public async Task Click_NavBar_Register()
     {
         await _page.ClickAsync("text=Register");
         await _page.WaitForURLAsync("http://www.eaapp.somee.com/Account/Register");
     }
-    [AllureStep("Logout of User account.")]
     public async Task Click_NavBar_LogOff()
     {
         await _page.ClickAsync("text=Log off");
     }
-    [AllureStep("Verify username is {0} on manage account Section on Naviagtion bar.")]
     public async Task validate_AccountName(string uName)
     {   
         var actualUsername =  await _page.GetByTitle("Manage").InnerTextAsync();
